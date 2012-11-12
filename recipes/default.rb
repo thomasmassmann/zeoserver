@@ -21,3 +21,21 @@ case node[:zeoserver][:install_method]
 when 'buildout'
   include_recipe 'zeoserver::buildout'
 end
+
+service "zeoserver" do
+  provider Chef::Provider::Service::Init::Debian
+  supports :restart => true, :start => true, :stop => true
+end
+
+template "zeoserver" do
+  path "/etc/init.d/zeoserver"
+  source "zeoserver.erb"
+  owner "root"
+  group "root"
+  mode "0755"
+  notifies :restart, resources(:service => "zeoserver")
+end
+
+service "zeoserver" do
+  action [:enable, :start]
+end

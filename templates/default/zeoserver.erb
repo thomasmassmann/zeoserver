@@ -1,0 +1,92 @@
+#!/bin/sh
+# /etc/rc.d/init.d/zeoserver
+# Startup script for a Zope ZEO-Server
+#
+# chkconfig: 345 80 20
+# description: Zope, a scalable web application server
+#
+# LSB Source function library
+. /lib/lsb/init-functions
+
+RETVAL=0
+# this is for the default install path
+path="<%= node[:zeoserver][:dir] %>"
+prog="zeoserver"
+
+start() {
+    echo -n "Starting $prog: "
+    output=`${path}/bin/zeoserver start`
+    # the return status of the zeoserver is not reliable, we need to parse
+    # its output via substring match
+    if echo $output | grep -q "started"; then
+        # success
+        touch <%= node[:zeoserver][:dir] %>/$prog
+        log_success_msg "ZEO-Server started successfully..."
+        echo
+        RETVAL=0
+    elif echo $output | grep -q "running"; then
+        log_success_msg "ZEO-Server already running..."
+        echo
+        RETVAL=0
+    else
+        # failed
+        log_failure_msg "ZEO-Server failed to start..."
+        echo
+        RETVAL=1
+    fi
+    return $RETVAL
+}
+
+stop() {
+    echo -n "Stopping $prog: "
+    output=`${path}/bin/zeoserver stop`
+    # the return status of the instance is not reliable, we need to parse
+    # its output via substring match
+    if echo $output | grep -q "stopped"; then
+        # success
+        rm <%= node[:zeoserver][:dir] %>/$prog
+        log_success_msg "ZEO-Server stopped successfully..."
+        echo
+        RETVAL=0
+    elif echo $output | grep -q "not running"; then
+        log_success_msg "ZEO-Server already stopped..."
+        echo
+        RETVAL=0
+    else
+        # failed
+        log_failure_msg "ZEO-Server failed to stop..."
+        echo
+        RETVAL=1
+    fi
+        return $RETVAL
+}
+
+restart() {
+   stop
+   start
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  status)
+        echo "ZEO Server:"
+        output=`${path}/bin/zeoserver status`
+        echo $output
+        ;;
+  restart)
+    restart
+    ;;
+  condrestart)
+    [ -e <%= node[:zeoserver][:dir] %>/$prog ] && restart
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|status|restart|condrestart}"
+    RETVAL=2
+esac
+
+exit $RETVAL
