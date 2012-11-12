@@ -6,11 +6,26 @@ This cookbook installs and configures a Zope ZEO-Server.
 Requirements
 ============
 
+Cookbooks
+---------
+
+- python
+
+
 Attributes
 ==========
 
 Usage
 =====
+
+default
+-------
+
+buildout
+--------
+
+Installs a ZEO-Server via buildout.
+
 
 License and Author
 ==================
