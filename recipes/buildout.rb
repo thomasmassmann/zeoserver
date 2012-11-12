@@ -43,10 +43,16 @@ python_virtualenv node[:zeoserver][:virtualenv] do
   action :create
 end
 
+cookbook_file "#{node[:zeoserver][:dir]}/bootstrap.py" do
+  source "bootstrap.py"
+  owner node[:zeoserver][:user]
+  mode 0644
+end
+
 template "#{node[:zeoserver][:dir]}/buildout.cfg" do
   source "buildout.cfg.erb"
   owner node[:zeoserver][:user]
-  mode 0755
+  mode 0644
   variables({
     :dir_filestorage => node[:zeoserver][:dir_filestorage],
     :dir_blobstorage => node[:zeoserver][:dir_blobstorage],
