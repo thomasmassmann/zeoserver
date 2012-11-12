@@ -22,12 +22,16 @@
 # Generall attributes
 default[:zeoserver][:user]                = "zope"
 default[:zeoserver][:dir]                 = "/srv/zeoserver"
-default[:zeoserver][:log_dir]             = "/var/log/zeoserver"
-default[:zeoserver][:var_dir]             = "/srv/zeoserver/var"
+default[:zeoserver][:dir_log]             = "/var/log/zeoserver"
+default[:zeoserver][:dir_var]             = "#{node[:zeoserver][:dir]}/var"
+default[:zeoserver][:dir_backups]         = "#{node[:zeoserver][:dir_var]}/backups"
+default[:zeoserver][:dir_filestorage]     = "#{node[:zeoserver][:dir_var]}/filestorage"
+default[:zeoserver][:dir_blobstorage]     = "#{node[:zeoserver][:dir_var]}/blobstorage"
+
 default[:zeoserver][:install_method]      = 'buildout'
 
 default[:zeoserver][:socket_name]         = "zeo.zdsock"
 default[:zeoserver][:pid]                 = "/var/run/zeoserver.pid"
 
 default[:zeoserver][:zeo_address]         = "127.0.0.1:8100"
-default[:zeoserver][:effective_user]      = "zope"
+default[:zeoserver][:effective_user]      = node[:zeoserver][:user]

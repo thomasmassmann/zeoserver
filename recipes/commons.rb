@@ -32,14 +32,14 @@ directory node[:zeoserver][:dir] do
   action :create
 end
 
-directory node[:zeoserver][:log_dir] do
+directory node[:zeoserver][:dir_log] do
   mode "0755"
   owner node[:zeoserver][:user]
   recursive true
   action :create
 end
 
-directory node[:zeoserver][:var_dir] do
+directory node[:zeoserver][:dir_var] do
   mode "0755"
   owner node[:zeoserver][:user]
   recursive true

@@ -1,0 +1,131 @@
+###############################################################################
+# Base Configuration; used by both production and development buildouts, which
+# extend it.
+# -----------------------------------------------------------------------------
+#
+# Buildout instructions in this file are usually only changed by experienced
+# developers.
+#
+# Beyond here there be dragons!
+[buildout]
+newest                          = false
+versions                        = versions
+
+
+###############################################################################
+# Custom options
+# -----------------------------------------------------------------------------
+# Buildout directories to use.
+download-cache                  = ${buildout:directory}/downloads
+eggs-directory                  = ${buildout:directory}/eggs
+extends-cache                   = ${buildout:directory}/extends-cache
+
+# IP addresses and ports.
+base-port-monitor               = 8200
+base-port-zeo                   = 8100
+
+# Backup settings.
+backup_cron_hour                = 1
+backup_cron_minute              = 5
+pack_cron_hour                  = 0
+pack_cron_minute                = 5
+backups-dir                     = <%= @dir_backups %>
+enable_snapshotrestore          = true
+
+
+###############################################################################
+# Extensions
+# -----------------------------------------------------------------------------
+# Load several extensions.
+extensions                      = buildout.dumppickedversions
+
+
+###############################################################################
+# Default parts
+# -------------
+# These are the default parts that must be available in all configurations.
+parts                           = zeoserver
+                                  zodb
+                                  backup
+                                  backup-daily
+                                  pack
+
+
+###############################################################################
+# Backup Scripts
+# --------------
+# This recipe builds the backup, restore and snapshotbackup commands.
+# For options see http://pypi.python.org/pypi/collective.recipe.backup
+[backup]
+recipe                          = collective.recipe.backup > 2.0
+blob_storage                    = ${zeoserver:blob-storage}
+datafs                          = ${zeoserver:file-storage}/Data.fs
+keep                            = 2
+keep_blob_days                  = 14
+location                        = ${buildout:backups-dir}/backups
+blobbackuplocation              = ${buildout:backups-dir}/blobstoragebackups
+enable_snapshotrestore          = ${buildout:enable_snapshotrestore}
+
+[backup-daily]
+recipe                          = z3c.recipe.usercrontab
+times                           = ${buildout:backup_cron_minute} ${buildout:backup_cron_hour} * * *
+command                         = ${buildout:directory}/bin/backup
+
+[pack]
+recipe                          = z3c.recipe.usercrontab
+times                           = ${buildout:pack_cron_minute} ${buildout:pack_cron_hour} * * 0
+command                         = ${buildout:directory}/bin/zeopack ${zeoserver:zeo-address}
+
+
+###############################################################################
+# ZEO Server
+# ----------
+# Use this section to install and configure a Zope Enterprise Objects server.
+# For options see http://pypi.python.org/pypi/plone.recipe.zeoserver
+[zeoserver]
+recipe                          = plone.recipe.zeoserver
+zeo-address                     = 127.0.0.1:${buildout:base-port-zeo}
+monitor-address                 = 127.0.0.1:${buildout:base-port-monitor}
+file-storage                    = <%= @dir_filestorage %>/Data.fs
+blob-storage                    = <%= @dir_blobstorage %>
+zeo-log                         = <%= @dir_log %>/zeoserver.log
+pack-days                       = 7
+pack-keep-old                   = false
+var                             = <%= @dir_var %>
+
+
+###############################################################################
+# ZODB Scripts
+# ------------
+# This recipe builds the zodb commands (necessary for backup).
+[zodb]
+recipe                          = zc.recipe.egg:script
+eggs                            = ZODB3
+
+
+###############################################################################
+# Versions Specification
+# ----------------------
+# Version information supplied here will "pin" Python packages to a particular
+# version number, even when you use the "newest" flag running buildout.
+# Specifying versions for all packages is a good idea and can prevent
+# accidental changes when you add new packages to your buildout.
+# Note that versions specified here will override those specified earlier
+# in the configuration, including those from the BlueBream and Zope version
+# config files.
+# pin versions of your additional packages here
+[versions]
+ZConfig = 2.8.0
+ZODB3 = 3.10.5
+ZopeUndo = 2.12.0
+collective.recipe.backup = 2.7
+plone.recipe.zeoserver = 1.2.3
+transaction = 1.1.1
+z3c.recipe.usercrontab = 1.1
+zc.buildout = 1.6.3
+zc.lockfile = 1.0.0
+zc.recipe.egg = 1.3.2
+zdaemon = 3.0.4
+zope.event = 4.0.0
+zope.interface = 4.0.1
+zope.mkzeoinstance = 3.9.5

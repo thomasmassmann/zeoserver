@@ -24,3 +24,30 @@ include_recipe "python::default"
 
 # Do some stuff we always need.
 include_recipe "zeoserver::commons"
+
+
+directory "#{node[:zeoserver][:dir]}/downloads" do
+  mode "0755"
+  owner node[:zeoserver][:user]
+  action :create
+end
+
+directory "#{node[:zeoserver][:dir]}/extends-cache" do
+  mode "0755"
+  owner node[:zeoserver][:user]
+  action :create
+end
+
+template "#{node[:zeoserver][:dir]}/buildout.cfg" do
+  source "buildout.cfg.erb"
+  owner node[:zeoserver][:user]
+  mode 0755
+  variables({
+    :dir_filestorage => node[:zeoserver][:dir_filestorage],
+    :dir_blobstorage => node[:zeoserver][:dir_blobstorage],
+    :dir_backups => node[:zeoserver][:dir_backups],
+    :dir_log => node[:zeoserver][:dir_log],
+    :dir_var => node[:mls][:dir_var]
+  })
+  # notifies :run, "execute[buildout]", :immediately
+end
