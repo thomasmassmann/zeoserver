@@ -38,6 +38,11 @@ directory "#{node[:zeoserver][:dir]}/extends-cache" do
   action :create
 end
 
+python_virtualenv node[:zeoserver][:virtualenv] do
+  owner node[:zeoserver][:user]
+  action :create
+end
+
 template "#{node[:zeoserver][:dir]}/buildout.cfg" do
   source "buildout.cfg.erb"
   owner node[:zeoserver][:user]

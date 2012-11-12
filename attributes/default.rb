@@ -35,3 +35,6 @@ default[:zeoserver][:pid]                 = "/var/run/zeoserver.pid"
 
 default[:zeoserver][:zeo_address]         = "127.0.0.1:8100"
 default[:zeoserver][:effective_user]      = node[:zeoserver][:user]
+
+# Buildout related attributes
+default[:zeoserver][:virtualenv]          = "#{node[:zeoserver][:dir]}/venv"
