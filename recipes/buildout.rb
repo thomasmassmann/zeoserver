@@ -58,7 +58,14 @@ template "#{node[:zeoserver][:dir]}/buildout.cfg" do
     :dir_blobstorage => node[:zeoserver][:dir_blobstorage],
     :dir_backups => node[:zeoserver][:dir_backups],
     :dir_log => node[:zeoserver][:dir_log],
-    :dir_var => node[:mls][:dir_var]
+    :dir_var => node[:zeoserver][:dir_var]
   })
-  # notifies :run, "execute[buildout]", :immediately
+  notifies :run, "execute[buildout]", :immediately
+end
+
+execute "buildout" do
+  cwd node[:zeoserver][:dir]
+  command "#{node[:zeoserver][:virtualenv]}/bin/python bootstrap.py && ./bin/buildout"
+  user node[:zeoserver][:user]
+  action :nothing
 end
