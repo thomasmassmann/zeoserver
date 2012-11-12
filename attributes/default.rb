@@ -27,14 +27,15 @@ default[:zeoserver][:dir_var]             = "#{node[:zeoserver][:dir]}/var"
 default[:zeoserver][:dir_backups]         = "#{node[:zeoserver][:dir_var]}/backups"
 default[:zeoserver][:dir_filestorage]     = "#{node[:zeoserver][:dir_var]}/filestorage"
 default[:zeoserver][:dir_blobstorage]     = "#{node[:zeoserver][:dir_var]}/blobstorage"
-
 default[:zeoserver][:install_method]      = 'buildout'
 
-default[:zeoserver][:socket_name]         = "zeo.zdsock"
-default[:zeoserver][:pid]                 = "/var/run/zeoserver.pid"
-
+# Process related attributes
 default[:zeoserver][:zeo_address]         = "127.0.0.1:8100"
 default[:zeoserver][:effective_user]      = node[:zeoserver][:user]
+default[:zeoserver][:socket_name]         = "zeo.zdsock"
+
+default[:zeoserver][:pid]                 = "/var/run/zeoserver.pid"
+
 
 # Buildout related attributes
 default[:zeoserver][:virtualenv]          = "#{node[:zeoserver][:dir]}/venv"

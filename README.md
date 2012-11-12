@@ -17,8 +17,8 @@ Attributes
 
 See `attributes/default.rb` for default values.
 
-General
--------
+General attributes
+------------------
 
 * `node[:zeoserver][:user]` - User the Zope ZEO-Server will run as.
 * `node[:zeoserver][:dir]` - Location for the ZEO-Server installation.
@@ -28,6 +28,14 @@ General
 * `node[:zeoserver][:dir_filestorage]` - Directory for database files.
 * `node[:zeoserver][:dir_blobstorage]` - Directory for blob files.
 * `node[:zeoserver][:install_method]` - Method to install the ZEO-Server with, default `buildout`.
+
+Process related attributes
+--------------------------
+
+* `node[:zeoserver][:zeo_address]` - The port for the ZEO server (either specify the port number only (with `127.0.0.1` as default) or you use the format `host:port`). Defaults to `127.0.0.1:8100`.
+* `node[:zeoserver][:effective_user]` - The name of the effective user for the ZEO process. This causes the process to run under the user account the process has been started with. Defaults to the `node[:zeoserver][:user]`.
+* `node[:zeoserver][:socket_name]` - The filename where ZEO will write its socket file. Defaults to `zeo.zdsock`.
+
 
 Buildout
 --------

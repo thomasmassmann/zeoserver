@@ -58,7 +58,10 @@ template "#{node[:zeoserver][:dir]}/buildout.cfg" do
     :dir_blobstorage => node[:zeoserver][:dir_blobstorage],
     :dir_backups => node[:zeoserver][:dir_backups],
     :dir_log => node[:zeoserver][:dir_log],
-    :dir_var => node[:zeoserver][:dir_var]
+    :dir_var => node[:zeoserver][:dir_var],
+    :zeo_address => node[:zeoserver][:zeo_address],
+    :effective_user => node[:zeoserver][:effective_user],
+    :socket_name => node[:zeoserver][:socket_name]
   })
   notifies :run, "execute[buildout]", :immediately
 end

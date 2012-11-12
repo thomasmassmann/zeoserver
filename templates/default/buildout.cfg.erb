@@ -22,7 +22,6 @@ extends-cache                   = ${buildout:directory}/extends-cache
 
 # IP addresses and ports.
 base-port-monitor               = 8200
-base-port-zeo                   = 8100
 
 # Backup settings.
 backup_cron_hour                = 1
@@ -84,7 +83,10 @@ command                         = ${buildout:directory}/bin/zeopack ${zeoserver:
 # For options see http://pypi.python.org/pypi/plone.recipe.zeoserver
 [zeoserver]
 recipe                          = plone.recipe.zeoserver
-zeo-address                     = 127.0.0.1:${buildout:base-port-zeo}
+zeo-address                     = <%= @zeo_address %>
+effective-user                  = <%= @effective_user %>
+socket-name                     = <%= @dir_var %>/<%= @socket_name %>
+
 monitor-address                 = 127.0.0.1:${buildout:base-port-monitor}
 file-storage                    = <%= @dir_filestorage %>/Data.fs
 blob-storage                    = <%= @dir_blobstorage %>

@@ -53,6 +53,23 @@ attribute "zeoserver/install_method",
   :default => "buildout"
 
 
+# Process related attributes
+attribute "zeoserver/zeo_address",
+  :display_name => "zeo-address",
+  :description => "Give a port for the ZEO server (either specify the port number only (with '127.0.0.1' as default) or you use the format host:port). Defaults to 127.0.0.1:8100.",
+  :default => "127.0.0.1:8100"
+
+attribute "zeoserver/effective_user",
+  :display_name => "effective-user",
+  :description => "The name of the effective user for the ZEO process. This causes the process to run under the user account the process has been started with. Defaults to the zeoserver-user (zope).",
+  :default => "zope"
+
+attribute "zeoserver/socket_name",
+  :display_name => "socket-name",
+  :description => "The filename where ZEO will write its socket file. Defaults to zeo.zdsock.",
+  :default => "zeo.zdsock"
+
+
 # Buildout related attributes
 attribute "zeoserver/virtualenv",
   :display_name => "Virtualenv Directory",
