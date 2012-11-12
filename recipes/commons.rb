@@ -1,6 +1,8 @@
 #
 # Cookbook Name:: zeoserver
-# Recipe:: default
+# Recipe:: commons
+#
+# Author:: Thomas Massmann (<thomas.massmann@inqbus.de>)
 #
 # Copyright 2012, Inqbus
 #
@@ -17,7 +19,29 @@
 # limitations under the License.
 #
 
-case node[:zeoserver][:install_method]
-when 'buildout'
-  include_recipe 'zeoserver::buildout'
+user node[:zeoserver][:user] do
+  shell "/bin/false"
+  system true
+  action :create
+end
+
+directory node[:zeoserver][:dir] do
+  mode "0755"
+  owner node[:zeoserver][:user]
+  recursive true
+  action :create
+end
+
+directory node[:zeoserver][:log_dir] do
+  mode "0755"
+  owner node[:zeoserver][:user]
+  recursive true
+  action :create
+end
+
+directory node[:zeoserver][:var_dir] do
+  mode "0755"
+  owner node[:zeoserver][:user]
+  recursive true
+  action :create
 end

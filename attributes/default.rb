@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: zeoserver
-# Recipe:: buildout
+# Attributes:: default
 #
 # Author:: Thomas Massmann (<thomas.massmann@inqbus.de>)
 #
@@ -19,8 +19,15 @@
 # limitations under the License.
 #
 
-# Python is required.
-include_recipe "python::default"
+# Generall attributes
+default[:zeoserver][:user]                = "zope"
+default[:zeoserver][:dir]                 = "/srv/zeoserver"
+default[:zeoserver][:log_dir]             = "/var/log/zeoserver"
+default[:zeoserver][:var_dir]             = "/srv/zeoserver/var"
+default[:zeoserver][:install_method]      = 'buildout'
 
-# Do some stuff we always need.
-include_recipe "zeoserver::commons"
+default[:zeoserver][:socket_name]         = "zeo.zdsock"
+default[:zeoserver][:pid]                 = "/var/run/zeoserver.pid"
+
+default[:zeoserver][:zeo_address]         = "127.0.0.1:8100"
+default[:zeoserver][:effective_user]      = "zope"
