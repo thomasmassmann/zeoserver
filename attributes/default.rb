@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-# Generall attributes
+# General attributes
 default[:zeoserver][:user]                = "zope"
 default[:zeoserver][:dir]                 = "/srv/zeoserver"
 default[:zeoserver][:dir_log]             = "/var/log/zeoserver"
