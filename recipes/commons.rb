@@ -45,3 +45,24 @@ directory node[:zeoserver][:dir_var] do
   recursive true
   action :create
 end
+
+directory node[:zeoserver][:dir_backups] do
+  mode "0755"
+  owner node[:zeoserver][:user]
+  recursive true
+  action :create
+end
+
+directory node[:zeoserver][:dir_filestorage] do
+  mode "0755"
+  owner node[:zeoserver][:user]
+  recursive true
+  action :create
+end
+
+directory node[:zeoserver][:dir_blobstorage] do
+  mode "0755"
+  owner node[:zeoserver][:user]
+  recursive true
+  action :create
+end
