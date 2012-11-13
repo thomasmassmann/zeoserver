@@ -20,16 +20,6 @@ download-cache                  = ${buildout:directory}/downloads
 eggs-directory                  = ${buildout:directory}/eggs
 extends-cache                   = ${buildout:directory}/extends-cache
 
-<% if @do_backup %>
-# Backup settings.
-backup_cron_hour                = 1
-backup_cron_minute              = 5
-pack_cron_hour                  = 0
-pack_cron_minute                = 5
-backups-dir                     = <%= @dir_backups %>
-enable_snapshotrestore          = true
-<% end %>
-
 
 ###############################################################################
 # Extensions
@@ -43,43 +33,25 @@ extensions                      = buildout.dumppickedversions
 # -------------
 # These are the default parts that must be available in all configurations.
 parts                           = zeoserver
-<% if @do_backup %>
                                   zodb
                                   backup
-                                  backup-daily
-<% end %>
-<% if @do_pack %>
-                                  pack
-<% end %>
+
 
 ###############################################################################
 # Backup Scripts
 # --------------
 # This recipe builds the backup, restore and snapshotbackup commands.
 # For options see http://pypi.python.org/pypi/collective.recipe.backup
-<% if @do_backup %>
 [backup]
-recipe                          = collective.recipe.backup > 2.0
+recipe                          = collective.recipe.backup
 blob_storage                    = ${zeoserver:blob-storage}
-datafs                          = ${zeoserver:file-storage}/Data.fs
-keep                            = 2
-keep_blob_days                  = 14
-location                        = ${buildout:backups-dir}/backups
-blobbackuplocation              = ${buildout:backups-dir}/blobstoragebackups
-enable_snapshotrestore          = ${buildout:enable_snapshotrestore}
+datafs                          = ${zeoserver:file-storage}
+location                        = <%= @dir_backups %>/backups
+blobbackuplocation              = <%= @dir_backups %>/blobstoragebackups
+snapshotlocation                = <%= @dir_backups %>/snapshotbackups
+blobsnapshotlocation            = <%= @dir_backups %>/blobstoragesnapshots
+enable_snapshotrestore          = true
 
-[backup-daily]
-recipe                          = z3c.recipe.usercrontab
-times                           = ${buildout:backup_cron_minute} ${buildout:backup_cron_hour} * * *
-command                         = ${buildout:directory}/bin/backup
-<% end %>
-
-<% if @do_pack %>
-[pack]
-recipe                          = z3c.recipe.usercrontab
-times                           = ${buildout:pack_cron_minute} ${buildout:pack_cron_hour} * * 0
-command                         = ${buildout:directory}/bin/zeopack ${zeoserver:zeo-address}
-<% end %>
 
 ###############################################################################
 # ZEO Server
@@ -104,7 +76,6 @@ pack-user                       = <%= @pack_user %>
 pack-password                   = <%= @pack_password %>
 
 
-<% if @do_backup %>
 ###############################################################################
 # ZODB Scripts
 # ------------
@@ -112,7 +83,6 @@ pack-password                   = <%= @pack_password %>
 [zodb]
 recipe                          = zc.recipe.egg:script
 eggs                            = ZODB3
-<% end %>
 
 ###############################################################################
 # Versions Specification
@@ -132,7 +102,6 @@ ZopeUndo = 2.12.0
 collective.recipe.backup = 2.7
 plone.recipe.zeoserver = 1.2.3
 transaction = 1.1.1
-z3c.recipe.usercrontab = 1.1
 zc.buildout = 1.6.3
 zc.lockfile = 1.0.0
 zc.recipe.egg = 1.3.2
