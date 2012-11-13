@@ -30,7 +30,14 @@ cookbook_file "#{node[:zeoserver][:dir]}/requirements.txt" do
   source "requirements.txt"
   owner node[:zeoserver][:user]
   mode 0644
-  notifies :upgrade, "python_pip[requirements]", :immediately
+  notifies :run, "execute[requirements_update]", :immediately
+end
+
+execute "requirements_update" do
+  cwd node[:zeoserver][:dir]
+  command "#{node[:zeoserver][:virtualenv]}/bin/pip install -U -r #{node[:zeoserver][:dir]}/requirements.txt"
+  user node[:zeoserver][:user]
+  action :nothing
 end
 
 python_pip "requirements" do
