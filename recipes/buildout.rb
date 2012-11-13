@@ -22,6 +22,9 @@
 # Python is required.
 include_recipe "python::default"
 
+# Install rsync
+package "rsync"
+
 # Do some stuff we always need.
 include_recipe "zeoserver::commons"
 
@@ -68,8 +71,6 @@ template "#{node[:zeoserver][:dir]}/buildout.cfg" do
     :pack_keep_old => node[:zeoserver][:pack_keep_old],
     :pack_user => node[:zeoserver][:pack_user],
     :pack_password => node[:zeoserver][:pack_password],
-    :do_backup => node[:zeoserver][:do_backup],
-    :do_pack => node[:zeoserver][:do_pack]
   })
   notifies :run, "execute[buildout]", :immediately
 end
