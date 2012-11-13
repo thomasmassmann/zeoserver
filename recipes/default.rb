@@ -23,12 +23,12 @@ include_recipe "python::default"
 # Install rsync
 package "rsync"
 
-include_recipe "zeoserver::#{node[:zeoserver][:install_method]}"
-
 service "zeoserver" do
   provider Chef::Provider::Service::Init::Debian
   supports :restart => true, :start => true, :stop => true
 end
+
+include_recipe "zeoserver::#{node[:zeoserver][:install_method]}"
 
 template "zeoserver" do
   path "/etc/init.d/zeoserver"

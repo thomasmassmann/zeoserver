@@ -67,6 +67,7 @@ template "#{node[:zeoserver][:dir]}/buildout.cfg" do
     :pack_password => node[:zeoserver][:pack_password],
   })
   notifies :run, "execute[buildout]", :immediately
+  notifies :restart, resources(:service => "zeoserver")
 end
 
 execute "buildout" do
