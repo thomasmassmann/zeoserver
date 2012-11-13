@@ -23,11 +23,7 @@ include_recipe "python::default"
 # Install rsync
 package "rsync"
 
-
-case node[:zeoserver][:install_method]
-when 'buildout'
-  include_recipe 'zeoserver::buildout'
-end
+include_recipe "zeoserver::#{node[:zeoserver][:install_method]}"
 
 service "zeoserver" do
   provider Chef::Provider::Service::Init::Debian
