@@ -29,7 +29,7 @@ end
 
 template "zeoserver" do
   path "/etc/init.d/zeoserver"
-  source "zeoserver.erb"
+  source "zeoserver_init.erb"
   owner "root"
   group "root"
   mode "0755"
