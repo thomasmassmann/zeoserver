@@ -46,3 +46,13 @@ python_pip "requirements" do
   options "-r"
   action :install
 end
+
+directory "#{node[:zeoserver][:dir]}/bin" do
+  mode "0755"
+  owner node[:zeoserver][:user]
+  action :create
+end
+
+link "#{node[:zeoserver][:dir]}/bin/zeopack" do
+  to "#{node[:zeoserver][:virtualenv]}/bin/zeopack"
+end
