@@ -52,6 +52,16 @@ attribute "zeoserver/install_method",
   :description => "How the ZEO-Server should be installed.",
   :default => "buildout"
 
+attribute "zeoserver/do_backup",
+  :display_name => "Enable Backup",
+  :description => "Enable backup and do a daily one via cron.",
+  :default => "true"
+
+attribute "zeoserver/do_pack",
+  :display_name => "Enable Database Packing",
+  :description => "Enable monthly scheduled packing of the ZODB.",
+  :default => "true"
+
 
 # Process related attributes
 attribute "zeoserver/zeo_address",

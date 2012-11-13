@@ -27,7 +27,9 @@ default[:zeoserver][:dir_var]                 = "#{node[:zeoserver][:dir]}/var"
 default[:zeoserver][:dir_backups]             = "#{node[:zeoserver][:dir_var]}/backups"
 default[:zeoserver][:dir_filestorage]         = "#{node[:zeoserver][:dir_var]}/filestorage"
 default[:zeoserver][:dir_blobstorage]         = "#{node[:zeoserver][:dir_var]}/blobstorage"
-default[:zeoserver][:install_method]          = 'buildout'
+default[:zeoserver][:install_method]          = "buildout"
+default[:zeoserver][:do_backup]               = true
+default[:zeoserver][:do_pack]                 = true
 
 # Process related attributes
 default[:zeoserver][:zeo_address]             = "127.0.0.1:8100"

@@ -28,6 +28,8 @@ General attributes
 * `node[:zeoserver][:dir_filestorage]` - Directory for database files.
 * `node[:zeoserver][:dir_blobstorage]` - Directory for blob files.
 * `node[:zeoserver][:install_method]` - Method to install the ZEO-Server with, default `buildout`.
+* `node[:zeoserver][:do_backup]` - Enable backup and do a daily one via cron. Defaults to true.
+* `node[:zeoserver][:do_pack]` - Enable monthly scheduled packing of the ZODB. Defaults to true.
 
 Process related attributes
 --------------------------
@@ -56,12 +58,17 @@ Buildout
 Usage
 =====
 
-Include the recipe on your node or role that fits how you wish to install the Zope ZEO-Server on your system per the recipes section above. Modify the attributes as required in your role to change how various configuration is applied per the attributes section above. In general, override attributes in the role should be used when changing attributes.
+Include the recipe on your node or role that fits how you wish to install the
+Zope ZEO-Server on your system per the recipes section above. Modify the
+attributes as required in your role to change how various configuration is
+applied per the attributes section above. In general, override attributes in
+the role should be used when changing attributes.
 
 default
 -------
 
-Installs a Zope ZEO-Server by buildout, pip or package depending on the chosen install method.
+Installs a Zope ZEO-Server by `buildout`, `pip` or `package` depending on the
+chosen install method.
 
 buildout
 --------
