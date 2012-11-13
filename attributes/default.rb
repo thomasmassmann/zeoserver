@@ -31,6 +31,7 @@ default[:zeoserver][:install_method]          = 'buildout'
 
 # Process related attributes
 default[:zeoserver][:zeo_address]             = "127.0.0.1:8100"
+default[:zeoserver][:monitor_address]         = "127.0.0.1:8200"
 default[:zeoserver][:effective_user]          = node[:zeoserver][:user]
 default[:zeoserver][:socket_name]             = "zeo.zdsock"
 
@@ -40,12 +41,6 @@ default[:zeoserver][:pack_gc]                 = true
 default[:zeoserver][:pack_keep_old]           = true
 default[:zeoserver][:pack_user]               = nil
 default[:zeoserver][:pack_password]           = nil
-
-# Monitring related attributes
-default[:zeoserver][:monitor_address]         = "127.0.0.1:8200"
-
-# Performance related attributes
-default[:zeoserver][:invalidation_queue_size] = 100
 
 # Buildout related attributes
 default[:zeoserver][:virtualenv]              = "#{node[:zeoserver][:dir]}/venv"

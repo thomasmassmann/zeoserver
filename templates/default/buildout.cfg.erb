@@ -20,9 +20,6 @@ download-cache                  = ${buildout:directory}/downloads
 eggs-directory                  = ${buildout:directory}/eggs
 extends-cache                   = ${buildout:directory}/extends-cache
 
-# IP addresses and ports.
-base-port-monitor               = 8200
-
 # Backup settings.
 backup_cron_hour                = 1
 backup_cron_minute              = 5
@@ -84,11 +81,10 @@ command                         = ${buildout:directory}/bin/zeopack ${zeoserver:
 [zeoserver]
 recipe                          = plone.recipe.zeoserver
 zeo-address                     = <%= @zeo_address %>
+monitor-address                 = <%= @monitor_address %>
 effective-user                  = <%= @effective_user %>
 socket-name                     = <%= @dir_var %>/<%= @socket_name %>
 var                             = <%= @dir_var %>
-
-monitor-address                 = 127.0.0.1:${buildout:base-port-monitor}
 file-storage                    = <%= @dir_filestorage %>/Data.fs
 blob-storage                    = <%= @dir_blobstorage %>
 zeo-log                         = <%= @dir_log %>/zeoserver.log

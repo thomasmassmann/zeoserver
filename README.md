@@ -33,6 +33,7 @@ Process related attributes
 --------------------------
 
 * `node[:zeoserver][:zeo_address]` - The port for the ZEO server (either specify the port number only (with `127.0.0.1` as default) or you use the format `host:port`). Defaults to `127.0.0.1:8100`.
+* `node[:zeoserver][:monitor_address]` - The address at which the monitor server should listen. The monitor server provides server statistics in a simple text format. Defaults to `127.0.0.1:8200`.
 * `node[:zeoserver][:effective_user]` - The name of the effective user for the ZEO process. This causes the process to run under the user account the process has been started with. Defaults to the `node[:zeoserver][:user]`.
 * `node[:zeoserver][:socket_name]` - The filename where ZEO will write its socket file. Defaults to `zeo.zdsock`.
 

@@ -60,6 +60,7 @@ template "#{node[:zeoserver][:dir]}/buildout.cfg" do
     :dir_log => node[:zeoserver][:dir_log],
     :dir_var => node[:zeoserver][:dir_var],
     :zeo_address => node[:zeoserver][:zeo_address],
+    :monitor_address => node[:zeoserver][:monitor_address],
     :effective_user => node[:zeoserver][:effective_user],
     :socket_name => node[:zeoserver][:socket_name],
     :pack_days => node[:zeoserver][:pack_days],

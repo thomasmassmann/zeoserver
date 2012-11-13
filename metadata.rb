@@ -59,6 +59,11 @@ attribute "zeoserver/zeo_address",
   :description => "Give a port for the ZEO server (either specify the port number only (with '127.0.0.1' as default) or you use the format host:port). Defaults to 127.0.0.1:8100.",
   :default => "127.0.0.1:8100"
 
+attribute "zeoserver/monitor_address",
+  :display_name => "monitor-address",
+  :description => "The address at which the monitor server should listen. The monitor server provides server statistics in a simple text format. Defaults to 127.0.0.1:8200.",
+  :default => "127.0.0.1:8200"
+
 attribute "zeoserver/effective_user",
   :display_name => "effective-user",
   :description => "The name of the effective user for the ZEO process. This causes the process to run under the user account the process has been started with. Defaults to the zeoserver-user (zope).",
