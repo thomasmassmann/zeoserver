@@ -106,7 +106,11 @@ default
 -------
 
 Installs a Zope ZEO-Server by `buildout`, `pip` or `package` depending on the
-chosen install method.
+chosen install method. The ZEO-Server is registered as a service and started
+automatically.
+
+Installs daily backups and weekly database packing via cron jobs (can be
+disabled - see attributes).
 
 buildout
 --------
