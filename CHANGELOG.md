@@ -2,9 +2,12 @@
 
 This file is used to list changes made in each version of zeoserver.
 
-## 0.1.0:
+## 0.1.0 (2012-11-13):
 
-* Initial release of zeoserver
+* Initial release of zeoserver.
+* Installs ZEO-Server via buildout.
+* Adds zeoserver init script.
+* Creates cron job for daily backups and weekly database packs.
 
 - - - 
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.
