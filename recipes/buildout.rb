@@ -19,12 +19,6 @@
 # limitations under the License.
 #
 
-# Python is required.
-include_recipe "python::default"
-
-# Install rsync
-package "rsync"
-
 # Do some stuff we always need.
 include_recipe "zeoserver::commons"
 

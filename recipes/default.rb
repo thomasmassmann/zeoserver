@@ -17,6 +17,13 @@
 # limitations under the License.
 #
 
+# Python is required.
+include_recipe "python::default"
+
+# Install rsync
+package "rsync"
+
+
 case node[:zeoserver][:install_method]
 when 'buildout'
   include_recipe 'zeoserver::buildout'
