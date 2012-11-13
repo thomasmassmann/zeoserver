@@ -70,6 +70,33 @@ attribute "zeoserver/socket_name",
   :default => "zeo.zdsock"
 
 
+# Packing related attributes
+attribute "zeoserver/pack_days",
+  :display_name => "pack-days",
+  :description => "How many days of history should the zeopack script retain. Defaults to one day.",
+  :default => "1"
+
+attribute "zeoserver/pack_gc",
+  :display_name => "pack-gc",
+  :description => "Can be set to false to disable garbage collection as part of the pack. Defaults to true.",
+  :default => "true"
+
+attribute "zeoserver/pack_keep_old",
+  :display_name => "pack-keep-old",
+  :description => "Can be set to false to disable the creation of *.fs.old files before the pack is run. Defaults to true.",
+  :default => "true"
+
+attribute "zeoserver/pack_user",
+  :display_name => "pack-user",
+  :description => "If the ZEO server uses authentication, this is the username used by the zeopack script to connect to the ZEO server.",
+  :default => nil
+
+attribute "zeoserver/pack_password",
+  :display_name => "pack-password",
+  :description => "If the ZEO server uses authentication, this is the password used by the zeopack script to connect to the ZEO server.",
+  :default => nil
+
+
 # Buildout related attributes
 attribute "zeoserver/virtualenv",
   :display_name => "Virtualenv Directory",

@@ -86,14 +86,18 @@ recipe                          = plone.recipe.zeoserver
 zeo-address                     = <%= @zeo_address %>
 effective-user                  = <%= @effective_user %>
 socket-name                     = <%= @dir_var %>/<%= @socket_name %>
+var                             = <%= @dir_var %>
 
 monitor-address                 = 127.0.0.1:${buildout:base-port-monitor}
 file-storage                    = <%= @dir_filestorage %>/Data.fs
 blob-storage                    = <%= @dir_blobstorage %>
 zeo-log                         = <%= @dir_log %>/zeoserver.log
-pack-days                       = 7
-pack-keep-old                   = false
-var                             = <%= @dir_var %>
+# Packing
+pack-days                       = <%= @pack_days %>
+pack-gc                         = pack-gc <%= @pack_gc %>
+pack-keep-old                   = pack-keep-old <%= @pack_keep_old %>
+pack-user                       = <%= @pack_user %>
+pack-password                   = <%= @pack_password %>
 
 
 ###############################################################################

@@ -61,7 +61,12 @@ template "#{node[:zeoserver][:dir]}/buildout.cfg" do
     :dir_var => node[:zeoserver][:dir_var],
     :zeo_address => node[:zeoserver][:zeo_address],
     :effective_user => node[:zeoserver][:effective_user],
-    :socket_name => node[:zeoserver][:socket_name]
+    :socket_name => node[:zeoserver][:socket_name],
+    :pack_days => node[:zeoserver][:pack_days],
+    :pack_gc => node[:zeoserver][:pack_gc],
+    :pack_keep_old => node[:zeoserver][:pack_keep_old],
+    :pack_user => node[:zeoserver][:pack_user],
+    :pack_password => node[:zeoserver][:pack_password]
   })
   notifies :run, "execute[buildout]", :immediately
 end

@@ -36,6 +36,15 @@ Process related attributes
 * `node[:zeoserver][:effective_user]` - The name of the effective user for the ZEO process. This causes the process to run under the user account the process has been started with. Defaults to the `node[:zeoserver][:user]`.
 * `node[:zeoserver][:socket_name]` - The filename where ZEO will write its socket file. Defaults to `zeo.zdsock`.
 
+Packing related attributes
+--------------------------
+
+* `node[:zeoserver][:pack_days]` - How many days of history should the zeopack script retain. Defaults to one day.
+* `node[:zeoserver][:pack_gc]` - Can be set to false to disable garbage collection as part of the pack. Defaults to true.
+* `node[:zeoserver][:pack_keep_old]` - Can be set to false to disable the creation of *.fs.old files before the pack is run. Defaults to true.
+* `node[:zeoserver][:pack_user]` - If the ZEO server uses authentication, this is the username used by the zeopack script to connect to the ZEO server.
+* `node[:zeoserver][:pack_password]` - If the ZEO server uses authentication, this is the password used by the zeopack script to connect to the ZEO server.
+
 
 Buildout
 --------
