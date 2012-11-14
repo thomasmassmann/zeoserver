@@ -3,7 +3,7 @@ maintainer_email  "thomas.massmann@inqbus.de"
 license           "apache2"
 description       "Installs and configures a Zope ZEO-Server."
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version           "0.1.1"
+version           "0.1.2"
 
 depends           "python"
 
