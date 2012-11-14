@@ -30,7 +30,7 @@ end
 
 include_recipe "zeoserver::#{node[:zeoserver][:install_method]}"
 
-template "zeoserver" do
+template "zeoserver_init" do
   path "/etc/init.d/zeoserver"
   source "zeoserver_init.erb"
   owner "root"
