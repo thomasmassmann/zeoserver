@@ -1,0 +1,7 @@
+#!/bin/sh
+
+REPOZO="<%= node[:zeoserver][:virtualenv] %>/bin/repozo"
+DATAFS="<%= node[:zeoserver][:dir_filestorage] %>/Data.fs"
+BACKUP_LOCATION="<%= node[:zeoserver][:dir_backups] %>/snapshotbackups"
+
+exec "$REPOZO" "--recover" "-o" "$DATAFS" "-r" "$BACKUP_LOCATION"
