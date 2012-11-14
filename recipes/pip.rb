@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-# Do some stuff we always need.
+# Install dependencies, prepare common directories.
 include_recipe "zeoserver::commons"
 
 
@@ -106,3 +106,6 @@ link "#{node[:zeoserver][:dir]}/parts/zeoserver/bin/zeoctl" do
   to "#{node[:zeoserver][:virtualenv]}/bin/zeoctl"
   owner node[:zeoserver][:user]
 end
+
+# Install and register services.
+include_recipe "zeoserver::services"

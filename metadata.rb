@@ -10,6 +10,7 @@ depends           "python"
 
 recipe "zeoserver", "Installs a ZEO-Server based on the chosen install method. Registers and starts a service. Installs cron jobs."
 recipe "zeoserver::buildout", "Installs a ZEO-Server via buildout."
+recipe "zeoserver::pip", "Installs a ZEO-Server via pip."
 
 
 # General Attributes.

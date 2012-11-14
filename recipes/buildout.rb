@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-# Do some stuff we always need.
+# Install dependencies, prepare common directories.
 include_recipe "zeoserver::commons"
 
 
@@ -76,3 +76,6 @@ execute "buildout" do
   user node[:zeoserver][:user]
   action :nothing
 end
+
+# Install and register services.
+include_recipe "zeoserver::services"

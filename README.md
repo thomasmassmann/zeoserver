@@ -120,7 +120,7 @@ Installs a ZEO-Server via buildout.
 pip
 ---
 
-Installs a ZEO-Server via pip (coming soon).
+Installs a ZEO-Server via pip.
 
 package
 -------

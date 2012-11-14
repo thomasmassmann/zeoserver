@@ -17,53 +17,5 @@
 # limitations under the License.
 #
 
-# Python is required.
-include_recipe "python::default"
-
-# Install rsync
-package "rsync"
-
-service "zeoserver" do
-  provider Chef::Provider::Service::Init::Debian
-  supports :restart => true, :start => true, :stop => true
-end
-
+# Install the zeoserver based on the chosen install method.
 include_recipe "zeoserver::#{node[:zeoserver][:install_method]}"
-
-template "zeoserver_init" do
-  path "/etc/init.d/zeoserver"
-  source "zeoserver_init.erb"
-  owner "root"
-  group "root"
-  mode "0755"
-  notifies :restart, resources(:service => "zeoserver")
-end
-
-service "zeoserver" do
-  action [:enable, :start]
-end
-
-cron "zeoserver-backup" do
-  minute node[:zeoserver][:backup_minute]
-  hour node[:zeoserver][:backup_hour]
-  command "#{node[:zeoserver][:dir]}/bin/backup"
-  user node[:zeoserver][:user]
-  if node[:zeoserver][:do_backup]
-    action :create
-  else
-    action :delete
-  end
-end
-
-cron "zeoserver-pack" do
-  minute node[:zeoserver][:pack_minute]
-  hour node[:zeoserver][:pack_hour]
-  weekday node[:zeoserver][:pack_weekday]
-  command "#{node[:zeoserver][:dir]}/bin/zeopack #{node[:zeoserver][:zeo_address]}"
-  user node[:zeoserver][:user]
-  if node[:zeoserver][:do_pack]
-    action :create
-  else
-    action :delete
-  end
-end

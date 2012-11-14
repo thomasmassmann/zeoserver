@@ -19,6 +19,17 @@
 # limitations under the License.
 #
 
+# Python is required.
+include_recipe "python::default"
+
+# Install rsync
+package "rsync"
+
+service "zeoserver" do
+  provider Chef::Provider::Service::Init::Debian
+  supports :restart => true, :start => true, :stop => true
+end
+
 user node[:zeoserver][:user] do
   shell "/bin/sh"
   home node[:zeoserver][:dir]
