@@ -20,7 +20,8 @@
 #
 
 user node[:zeoserver][:user] do
-  shell "/bin/false"
+  shell "/bin/sh"
+  home node[:zeoserver][:dir]
   system true
   action :create
 end
