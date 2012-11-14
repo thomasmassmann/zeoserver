@@ -1,0 +1,45 @@
+# ZEO configuration file
+
+%define INSTANCE <%= node[:zeoserver][:dir] %>/parts/zeoserver
+
+<zeo>
+  address <%= node[:zeoserver][:zeo_address] %>
+  monitor-address <%= node[:zeoserver][:monitor_address] %>
+  read-only false
+  invalidation-queue-size 100
+  pid-filename <%= node[:zeoserver][:dir] %>/zeoserver.pid
+  # transaction-timeout SECONDS
+</zeo>
+
+<filestorage 1>
+  path <%= node[:zeoserver][:dir_filestorage] %>/Data.fs
+  blob-dir <%= node[:zeoserver][:dir_blobstorage] %>/blobstorage
+  pack-gc <%= node[:zeoserver][:pack_gc] %>
+  pack-keep-old <%= node[:zeoserver][:pack_keep_old] %>
+</filestorage>
+
+<eventlog>
+  level info
+  <logfile>
+    path <%= node[:zeoserver][:dir_log] %>/zeoserver.log
+    format %(asctime)s %(message)s
+  </logfile>
+</eventlog>
+
+<runner>
+  program $INSTANCE/bin/runzeo
+  socket-name <%= node[:zeoserver][:dir] %>/<%= node[:zeoserver][:socket_name] %>
+  daemon true
+  forever false
+  backoff-limit 10
+  exit-codes 0, 2
+  directory $INSTANCE
+  default-to-interactive true
+  user <%= node[:zeoserver][:effective_user] %>
+  python <%= node[:zeoserver][:virtualenv] %>/bin/python
+  zdrun <%= node[:zeoserver][:virtualenv] %>/lib/python2.6/site-packages/zdaemon/zdrun.py
+
+  # This logfile should match the one in the zeo.conf file.
+  # It is used by zdctl's logtail command, zdrun/zdctl doesn't write it.
+  logfile <%= node[:zeoserver][:dir_log] %>/zeoserver.log
+</runner>

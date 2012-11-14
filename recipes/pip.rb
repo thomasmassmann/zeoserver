@@ -50,9 +50,59 @@ end
 directory "#{node[:zeoserver][:dir]}/bin" do
   mode "0755"
   owner node[:zeoserver][:user]
+  recursive true
   action :create
 end
 
 link "#{node[:zeoserver][:dir]}/bin/zeopack" do
   to "#{node[:zeoserver][:virtualenv]}/bin/zeopack"
+  owner node[:zeoserver][:user]
+end
+
+template "zeoserver" do
+  path "#{node[:zeoserver][:dir]}/bin/zeoserver"
+  source "zeoserver.erb"
+  owner node[:zeoserver][:user]
+  mode "0755"
+end
+
+directory "#{node[:zeoserver][:dir]}/parts/zeoserver" do
+  mode "0755"
+  owner node[:zeoserver][:user]
+  recursive true
+  action :create
+end
+
+directory "#{node[:zeoserver][:dir]}/parts/zeoserver/bin" do
+  mode "0755"
+  owner node[:zeoserver][:user]
+  recursive true
+  action :create
+end
+
+directory "#{node[:zeoserver][:dir]}/parts/zeoserver/etc" do
+  mode "0755"
+  owner node[:zeoserver][:user]
+  recursive true
+  action :create
+end
+
+template "zeo.conf" do
+  path "#{node[:zeoserver][:dir]}/parts/zeoserver/etc/zeo.conf"
+  source "zeo.conf.erb"
+  owner node[:zeoserver][:user]
+  mode "0644"
+  # notifies :restart, resources(:service => "zeoserver")
+end
+
+template "runzeo" do
+  path "#{node[:zeoserver][:dir]}/parts/zeoserver/bin/runzeo"
+  source "runzeo.erb"
+  owner node[:zeoserver][:user]
+  mode "0755"
+end
+
+link "#{node[:zeoserver][:dir]}/parts/zeoserver/bin/zeoctl" do
+  to "#{node[:zeoserver][:virtualenv]}/bin/zeoctl"
+  owner node[:zeoserver][:user]
 end

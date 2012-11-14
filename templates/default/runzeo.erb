@@ -1,0 +1,15 @@
+#!/bin/sh
+# ZEO instance start script
+
+PYTHON="<%= node[:zeoserver][:virtualenv] %>/bin/python"
+INSTANCE_HOME="<%= node[:zeoserver][:dir] %>/parts/zeoserver"
+ZODB3_HOME="<%= node[:zeoserver][:virtualenv] %>/lib/python2.6/site-packages"
+
+CONFIG_FILE="<%= node[:zeoserver][:dir] %>/parts/zeoserver/etc/zeo.conf"
+
+PYTHONPATH="$ZODB3_HOME"
+export PYTHONPATH INSTANCE_HOME
+
+RUNZEO="$ZODB3_HOME/ZEO/runzeo.py"
+
+exec "$PYTHON" "$RUNZEO" -C "$CONFIG_FILE" ${1+"$@"}
