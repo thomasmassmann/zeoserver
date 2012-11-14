@@ -123,5 +123,12 @@ template "backup" do
   mode "0755"
 end
 
+template "snapshotbackup" do
+  path "#{node[:zeoserver][:dir]}/bin/snapshotbackup"
+  source "snapshotbackup.erb"
+  owner node[:zeoserver][:user]
+  mode "0755"
+end
+
 # Install and register services.
 include_recipe "zeoserver::services"
