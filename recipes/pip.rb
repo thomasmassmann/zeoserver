@@ -107,5 +107,21 @@ link "#{node[:zeoserver][:dir]}/parts/zeoserver/bin/zeoctl" do
   owner node[:zeoserver][:user]
 end
 
+%w{backups blobstoragebackups snapshotbackups blobstoragesnapshots}.each do |dir|
+  directory "#{node[:zeoserver][:dir_backups]}/#{dir}" do
+    mode "0755"
+    owner node[:zeoserver][:user]
+    recursive true
+    action :create
+  end
+end
+
+template "backup" do
+  path "#{node[:zeoserver][:dir]}/bin/backup"
+  source "backup.erb"
+  owner node[:zeoserver][:user]
+  mode "0755"
+end
+
 # Install and register services.
 include_recipe "zeoserver::services"
