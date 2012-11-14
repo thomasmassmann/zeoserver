@@ -13,7 +13,7 @@
 
 <filestorage 1>
   path <%= node[:zeoserver][:dir_filestorage] %>/Data.fs
-  blob-dir <%= node[:zeoserver][:dir_blobstorage] %>/blobstorage
+  blob-dir <%= node[:zeoserver][:dir_blobstorage] %>
   pack-gc <%= node[:zeoserver][:pack_gc] %>
   pack-keep-old <%= node[:zeoserver][:pack_keep_old] %>
 </filestorage>
