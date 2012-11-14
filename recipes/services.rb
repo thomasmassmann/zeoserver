@@ -35,7 +35,7 @@ end
 cron "zeoserver-backup" do
   minute node[:zeoserver][:backup_minute]
   hour node[:zeoserver][:backup_hour]
-  command "#{node[:zeoserver][:dir]}/bin/backup"
+  command "#{node[:zeoserver][:dir]}/bin/backup -q"
   user node[:zeoserver][:user]
   if node[:zeoserver][:do_backup]
     action :create
