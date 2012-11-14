@@ -123,6 +123,13 @@ template "backup" do
   mode "0755"
 end
 
+template "restore" do
+  path "#{node[:zeoserver][:dir]}/bin/restore"
+  source "restore.erb"
+  owner node[:zeoserver][:user]
+  mode "0755"
+end
+
 template "snapshotbackup" do
   path "#{node[:zeoserver][:dir]}/bin/snapshotbackup"
   source "snapshotbackup.erb"
