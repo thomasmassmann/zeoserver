@@ -1,7 +1,53 @@
-#!/bin/sh
+#!<%= node[:zeoserver][:virtualenv] %>/bin/python
 
-REPOZO="<%= node[:zeoserver][:virtualenv] %>/bin/repozo"
-DATAFS="<%= node[:zeoserver][:dir_filestorage] %>/Data.fs"
-BACKUP_LOCATION="<%= node[:zeoserver][:dir_backups] %>/snapshotbackups"
+import sys
+sys.path[0:0] = [
+    '<%= node[:zeoserver][:virtualenv] %>/lib/python2.6/site-packages',
+    ]
 
-exec "$REPOZO" "--backup" "-f" "$DATAFS" "-r" "$BACKUP_LOCATION" "-F" "--gzip"
+
+
+import logging
+loglevel = logging.INFO
+from optparse import OptionParser
+parser = OptionParser()
+# parser.add_option("-S", "--storage", dest="storage",
+#                  action="store", type="string",
+#                  help="storage name")
+parser.add_option("-q", "--quiet",
+                  action="store_false", dest="verbose", default=True,
+                  help="don't print status messages to stdout")
+(options, args) = parser.parse_args()
+# storage = options.storage
+# Allow the user to make the script more quiet (say in a cronjob):
+if not options.verbose:
+    loglevel = logging.WARN
+logging.basicConfig(level=loglevel,
+    format='%(levelname)s: %(message)s')
+
+
+import collective.recipe.backup.main
+
+if __name__ == '__main__':
+    collective.recipe.backup.main.snapshot_main(
+        bin_dir='<%= node[:zeoserver][:virtualenv] %>/bin',
+        storages=[{
+            'backup_location': '<%= node[:zeoserver][:dir_backups] %>/backups',
+            'blob_backup_location': '<%= node[:zeoserver][:dir_backups] %>/blobstoragebackups',
+            'blob_snapshot_location': '<%= node[:zeoserver][:dir_backups] %>/blobstoragesnapshots',
+            'blobdir': '<%= node[:zeoserver][:dir_blobstorage] %>',
+            'datafs': '<%= node[:zeoserver][:dir_filestorage] %>/Data.fs',
+            'snapshot_location': '<%= node[:zeoserver][:dir_backups] %>/snapshotbackups',
+            'storage': '1',
+        }],
+        keep=2,
+        keep_blob_days=31,
+        full=False,
+        verbose=False,
+        gzip=True,
+        only_blobs=False,
+        backup_blobs=True,
+        use_rsync=True,
+        pre_command='',
+        post_command='',
+    )
