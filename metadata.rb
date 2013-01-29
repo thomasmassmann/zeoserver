@@ -1,3 +1,4 @@
+name              "zeoserver"
 maintainer        "Inqbus"
 maintainer_email  "thomas.massmann@inqbus.de"
 license           "apache2"

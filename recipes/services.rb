@@ -25,7 +25,7 @@ template "zeoserver_init" do
   owner "root"
   group "root"
   mode "0755"
-  notifies :restart, resources(:service => "zeoserver")
+  notifies :restart, "service[zeoserver]"
 end
 
 service "zeoserver" do
